@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import com.example.demo.entite.Medicament?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.MedicamentController">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="1000.0">
+         <children>
+            <AnchorPane prefHeight="600.0" prefWidth="250.0">
+               <children>
+                  <Button layoutX="25.0" layoutY="205.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Gestion Patient" />
+                  <Button layoutX="25.0" layoutY="257.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Gestion Medicament" />
+                  <Button layoutX="25.0" layoutY="307.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Gestion Commande" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="250.0" prefHeight="600.0" prefWidth="750.0">
+               <children>
+                  <Button layoutX="34.0" layoutY="91.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="30.0" prefWidth="150.0" text="Ajouter" />
+                  <Button layoutX="208.0" layoutY="91.0" mnemonicParsing="false" onAction="#Modifier" prefHeight="30.0" prefWidth="150.0" text="Modifier" />
+                  <Button layoutX="375.0" layoutY="91.0" mnemonicParsing="false" onAction="#Archiver" prefHeight="30.0" prefWidth="150.0" text="Archiver" />
+                  <Button layoutX="549.0" layoutY="91.0" mnemonicParsing="false" onAction="#Clear" prefHeight="30.0" prefWidth="150.0" text="Clear" />
+                  <Label layoutX="278.0" layoutY="38.0" text="Gestion Medicament">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TableView layoutY="250.0" prefHeight="350.0" prefWidth="750.0">
+                     <columns>
+                        <TableColumn fx:id="colId" prefWidth="150.0" text="Code" />
+                        <TableColumn fx:id="colNom" prefWidth="150.0" text="Nom" />
+                        <TableColumn fx:id="colPrix" prefWidth="150.0" text="Prix" />
+                        <TableColumn fx:id="colStock" prefWidth="150.0" text="Qte" />
+                        <TableColumn fx:id="colType" prefWidth="150.0" text="Type" />
+                     </columns>
+                  </TableView>
+                  <TextField fx:id="Id" layoutX="35.0" layoutY="149.0" prefHeight="30.0" promptText="Code" />
+                  <TextField fx:id="Stock" layoutX="35.0" layoutY="197.0" prefHeight="30.0" promptText="Qte" />
+                  <TextField fx:id="Nom" layoutX="209.0" layoutY="149.0" prefHeight="30.0" promptText="Nom" />
+                  <TextField fx:id="Type" layoutX="209.0" layoutY="197.0" prefHeight="30.0" promptText="Type" />
+                  <TextField fx:id="Prix" layoutX="376.0" layoutY="149.0" prefHeight="30.0" promptText="Prix" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
