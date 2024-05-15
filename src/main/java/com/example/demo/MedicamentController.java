@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -74,9 +75,15 @@ public class MedicamentController implements Initializable {
         medicament.setTypeMed(Type.getText());
 
         if(daoMedicament.add(medicament)){
-            System.out.println("Ajout avec succès");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ajout Medicament");
+            alert.setContentText("Ajout avec succès");
+            alert.showAndWait();
         }else{
-            System.out.println("Echec d'ajout");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ajout Medicament");
+            alert.setContentText("Echec d'ajout");
+            alert.showAndWait();
         }
         lister();
         remiseAzero();
@@ -90,9 +97,15 @@ public class MedicamentController implements Initializable {
         medicament.setQte(Integer.parseInt(Stock.getText()));
         medicament.setTypeMed(Type.getText());
         if(daoMedicament.update(medicament)){
-            System.out.println("Modification avec succès");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Modifier Medicament");
+            alert.setContentText("Modifier avec succès");
+            alert.showAndWait();
         }else{
-            System.out.println("Echec de modification");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modifier Medicament");
+            alert.setContentText("Echec de modification");
+            alert.showAndWait();
         }
         lister();
         remiseAzero();
@@ -101,8 +114,15 @@ public class MedicamentController implements Initializable {
     @FXML
     private void Archiver() {
         if(daoMedicament.delete(Integer.parseInt(Id.getText()))){
-            System.out.println("Archivage avec succès");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Archivage Medicament");
+            alert.setContentText("Archivage avec succès");
+            alert.showAndWait();
         }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Archivage Medicament");
+            alert.setContentText("Echec d'archivage");
+            alert.showAndWait();
             System.out.println("Echec d'archivage");
         }
         lister();
@@ -151,15 +171,9 @@ public class MedicamentController implements Initializable {
 
         observableList.addAll(daoMedicament.findByName(Rechercche.getText()));
 
-        colId.setCellValueFactory(new PropertyValueFactory<>("codeMed"));
-        colNom.setCellValueFactory(new PropertyValueFactory<>("nomMed"));
-        colPrix.setCellValueFactory(new PropertyValueFactory<>("prixMed"));
-        colStock.setCellValueFactory(new PropertyValueFactory<>("qte"));
-        colType.setCellValueFactory(new PropertyValueFactory<>("typeMed"));
-
         tv.setItems(observableList);
 
-        if(Rechercche.getText().equals("")){
+        if(Rechercche.getText().isEmpty()){
             lister();
         }
     }
