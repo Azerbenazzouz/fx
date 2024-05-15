@@ -110,36 +110,28 @@ public class MedicamentController {
     private void lister() {
         tv.getItems().clear();
 
-        Medicament m=new Medicament(
-                1,
-                "azer",
-                44.44F,
-                5,
-                "Zouu"
-        );
-        observableList.add(m);
-//        try {
-//            ResultSet rs = cn.createStatement().executeQuery("select * from medicament");
-//            while (rs.next()) {
-//                observableList.add(
-//                        new Medicament(
-//                                rs.getInt(1),
-//                                rs.getString(2),
-//                                rs.getFloat(3),
-//                                rs.getInt(4),
-//                                rs.getString(5)
-//                        )
-//                );
-//            }
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
+        try {
+            ResultSet rs = cn.createStatement().executeQuery("select * from medicament");
+            while (rs.next()) {
+                observableList.add(
+                        new Medicament(
+                                rs.getInt(1),
+                                rs.getString(2),
+                                rs.getFloat(3),
+                                rs.getInt(4),
+                                rs.getString(5)
+                        )
+                );
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
-        colId.setCellValueFactory(new PropertyValueFactory<Medicament,Integer>("codeMed"));
-        colNom.setCellValueFactory(new PropertyValueFactory<Medicament,String>("nomMed"));
-        colPrix.setCellValueFactory(new PropertyValueFactory<Medicament,Float>("prixMed"));
-        colStock.setCellValueFactory(new PropertyValueFactory<Medicament,Integer>("qte"));
-        colType.setCellValueFactory(new PropertyValueFactory<Medicament,String>("typeMed"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("codeMed"));
+        colNom.setCellValueFactory(new PropertyValueFactory<>("nomMed"));
+        colPrix.setCellValueFactory(new PropertyValueFactory<>("prixMed"));
+        colStock.setCellValueFactory(new PropertyValueFactory<>("qte"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("typeMed"));
 
         tv.setItems(observableList);
     }
@@ -162,7 +154,7 @@ public class MedicamentController {
     private void GestionPatient(ActionEvent event) throws Exception {
         ((Node) event.getSource()).getScene().getWindow().hide();
         Stage st2= new Stage();
-        Parent root= FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        Parent root= FXMLLoader.load(getClass().getResource("Patient.fxml"));
 
         Scene se=new Scene(root);
         st2.setScene(se);
