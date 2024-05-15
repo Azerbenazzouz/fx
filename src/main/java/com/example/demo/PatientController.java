@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -22,14 +23,15 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class PatientController implements Initializable {
-    private Connection cn = DbConnection.seConnecter();
-    private DaoPatient daoPatient = new DaoPatient();
+    private final Connection cn = DbConnection.seConnecter();
+    private final DaoPatient daoPatient = new DaoPatient();
 
     @FXML
-    TableView<Patient> tv = new TableView<Patient>();
+    TableView<Patient> tv = new TableView<>();
 
     @FXML
     TextField Code;
@@ -59,19 +61,24 @@ public class PatientController implements Initializable {
 
     @FXML
     private void Ajouter() {
-
         patient.setCode(Integer.parseInt(Code.getText()));
         patient.setNom(Nom.getText());
         patient.setEmail(Email.getText());
         patient.setTel(Telephone.getText());
 
         if(daoPatient.add(patient)){
-            System.out.println("Ajout avec succès");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ajouter Patient");
+            alert.setContentText("Ajouter avec succès");
+            alert.showAndWait();
         }else{
-            System.out.println("Echec d'ajout");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ajouter Patient");
+            alert.setContentText("Echec d'ajout");
+            alert.showAndWait();
         }
         lister();
-        remiseAzéro();
+        remiseAzero();
     }
 
     @FXML
@@ -81,28 +88,42 @@ public class PatientController implements Initializable {
         patient.setEmail(Email.getText());
         patient.setTel(Telephone.getText());
         if(daoPatient.update(patient)){
-            System.out.println("Modification avec succès");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Modification Patient");
+            alert.setContentText("Modification avec succès");
+            alert.showAndWait();
         }else{
-            System.out.println("Echec de modification");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modification Patient");
+            alert.setContentText("Echec de modification");
+            alert.showAndWait();
         }
         lister();
-        remiseAzéro();
+        remiseAzero();
     }
 
     @FXML
     private void Archiver() {
         if(daoPatient.delete(Integer.parseInt(Code.getText()))){
             System.out.println("Archivage avec succès");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Archivage Patient");
+            alert.setContentText("Archivage avec succès");
+            alert.showAndWait();
         }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Archivage Patient");
+            alert.setContentText("Echec d'archivage");
+            alert.showAndWait();
             System.out.println("Echec d'archivage");
         }
         lister();
-        remiseAzéro();
+        remiseAzero();
     }
     @FXML
     private void Clear(){
         lister();
-        remiseAzéro();
+        remiseAzero();
     }
 
     private void lister() {
@@ -120,7 +141,7 @@ public class PatientController implements Initializable {
                 observableList.add( p );
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println(throwables.getMessage());
         }
 
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -137,14 +158,9 @@ public class PatientController implements Initializable {
 
         observableList.addAll(daoPatient.findByName(Recherche.getText()));
 
-        colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
-        colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colTelephone.setCellValueFactory(new PropertyValueFactory<>("tel"));
-
         tv.setItems(observableList);
 
-        if(Recherche.getText().equals("")){
+        if(Recherche.getText().isEmpty()){
             lister();
         }
     }
@@ -166,7 +182,7 @@ public class PatientController implements Initializable {
     private void GestionMedicament(ActionEvent event) throws Exception {
         ((Node) event.getSource()).getScene().getWindow().hide();
         Stage st2= new Stage();
-        Parent root= FXMLLoader.load(getClass().getResource("Medicament.fxml"));
+        Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Medicament.fxml")));
 
         Scene se=new Scene(root);
         st2.setScene(se);
@@ -174,7 +190,7 @@ public class PatientController implements Initializable {
         st2.show();
     }
 
-    private void remiseAzéro() {
+    private void remiseAzero() {
         Code.setText("");
         Nom.setText("");
         Email.setText("");

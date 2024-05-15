@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -43,14 +44,20 @@ public class UtilisateurController {
         utilisateur.setRole("Role_Utilisateur");
 
         if(daoUtilisateur.add(utilisateur)){
-            System.out.println("S'inscrire avec succès");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("S'inscrire");
+            alert.setContentText("S'inscrire avec succès");
+            alert.showAndWait();
             try {
                 GestionPatient(event);
             }catch (IOException e){
                 System.out.println(e.getMessage());
             }
         }else{
-            System.out.println("Echec d'inscri");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("S'inscrire");
+            alert.setContentText("Echec d'inscri");
+            alert.showAndWait();
         }
     }
 
@@ -60,14 +67,20 @@ public class UtilisateurController {
         utilisateur.setMotDePasse(Password.getText());
 
         if(daoUtilisateur.Authentifier(utilisateur)){
-            System.out.println("Authentifier avec succès");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Authentifier");
+            alert.setContentText("Authentifier avec succès");
+            alert.showAndWait();
             try {
                 GestionPatient(event);
             }catch (IOException e){
                 System.out.println(e.getMessage());
             }
         }else{
-            System.out.println("Echec de authentification");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Authentifier");
+            alert.setContentText("Echec de authentification");
+            alert.showAndWait();
         }
     }
 
