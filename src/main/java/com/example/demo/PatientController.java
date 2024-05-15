@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.dao.DaoPatient;
 import com.example.demo.entite.Patient;
 import com.example.demo.utils.DbConnection;
+import com.example.demo.utils.FormatTypeCheck;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -66,7 +67,7 @@ public class PatientController implements Initializable {
         patient.setEmail(Email.getText());
         patient.setTel(Telephone.getText());
 
-        if(daoPatient.add(patient)){
+        if(daoPatient.add(patient) && checkInput()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Ajouter Patient");
             alert.setContentText("Ajouter avec succès");
@@ -87,7 +88,7 @@ public class PatientController implements Initializable {
         patient.setNom(Nom.getText());
         patient.setEmail(Email.getText());
         patient.setTel(Telephone.getText());
-        if(daoPatient.update(patient)){
+        if(daoPatient.update(patient) && checkInput()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Modification Patient");
             alert.setContentText("Modification avec succès");
@@ -199,5 +200,14 @@ public class PatientController implements Initializable {
 
     public void initialize(URL url, ResourceBundle rb) {
         this.lister();
+    }
+
+    private boolean checkInput(){
+        if (!FormatTypeCheck.checkInt(Code.getText()) && Code.getText().isEmpty()) return false;
+        if (!FormatTypeCheck.checkInt(Telephone.getText()) && Telephone.getText().isEmpty()) return false;
+        if (Nom.getText().isEmpty()) return false;
+        if (Email.getText().isEmpty()) return false;
+
+        return true;
     }
 }

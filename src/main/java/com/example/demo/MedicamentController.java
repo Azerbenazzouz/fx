@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.dao.DaoMedicament;
 import com.example.demo.entite.Medicament;
 import com.example.demo.utils.DbConnection;
+import com.example.demo.utils.FormatTypeCheck;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -74,7 +75,7 @@ public class MedicamentController implements Initializable {
         medicament.setQte(Integer.parseInt(Stock.getText()));
         medicament.setTypeMed(Type.getText());
 
-        if(daoMedicament.add(medicament)){
+        if(daoMedicament.add(medicament) && checkInput()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Ajout Medicament");
             alert.setContentText("Ajout avec succès");
@@ -96,7 +97,7 @@ public class MedicamentController implements Initializable {
         medicament.setPrixMed(Float.parseFloat(Prix.getText()));
         medicament.setQte(Integer.parseInt(Stock.getText()));
         medicament.setTypeMed(Type.getText());
-        if(daoMedicament.update(medicament)){
+        if(daoMedicament.update(medicament) && checkInput()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Modifier Medicament");
             alert.setContentText("Modifier avec succès");
@@ -113,6 +114,7 @@ public class MedicamentController implements Initializable {
 
     @FXML
     private void Archiver() {
+
         if(daoMedicament.delete(Integer.parseInt(Id.getText()))){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Archivage Medicament");
@@ -216,4 +218,16 @@ public class MedicamentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.lister();
     }
+
+    private boolean checkInput(){
+        if (!FormatTypeCheck.checkInt(Id.getText()) && Id.getText().isEmpty()) return false;
+        if (!FormatTypeCheck.checkFloat(Prix.getText()) && Id.getText().isEmpty()) return false;
+        if (!FormatTypeCheck.checkInt(Stock.getText()) && Stock.getText().isEmpty()) return false;
+        if (Nom.getText().isEmpty()) return false;
+        if (Type.getText().isEmpty()) return false;
+
+        return true;
+    }
+
+
 }
