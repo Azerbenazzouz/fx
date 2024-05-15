@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.collections.*?>
 <?import com.example.demo.entite.Medicament?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.collections.*?>
+
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.MedicamentController">
    <children>
@@ -12,7 +13,7 @@
          <children>
             <AnchorPane prefHeight="600.0" prefWidth="250.0">
                <children>
-                  <Button layoutX="25.0" layoutY="205.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Gestion Patient" />
+                  <Button layoutX="25.0" layoutY="205.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Gestion Patient" onAction="#GestionPatient" />
                   <Button layoutX="25.0" layoutY="257.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Gestion Medicament" />
                   <Button layoutX="25.0" layoutY="307.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Gestion Commande" />
                </children>
@@ -28,7 +29,7 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <TableView layoutY="250.0" prefHeight="350.0" prefWidth="750.0">
+                  <TableView layoutY="250.0" prefHeight="350.0" prefWidth="750.0" fx:id="tv">
                      <columns>
                         <TableColumn fx:id="colId" prefWidth="150.0" text="Code" />
                         <TableColumn fx:id="colNom" prefWidth="150.0" text="Nom" />
@@ -36,6 +37,11 @@
                         <TableColumn fx:id="colStock" prefWidth="150.0" text="Qte" />
                         <TableColumn fx:id="colType" prefWidth="150.0" text="Type" />
                      </columns>
+                     <items>
+                        <FXCollections fx:factory="observableArrayList" fx:id="observableList">
+                           <Medicament codeMed="1" nomMed="" prixMed="44" qte="5" typeMed="" />
+                        </FXCollections>
+                     </items>
                   </TableView>
                   <TextField fx:id="Id" layoutX="35.0" layoutY="149.0" prefHeight="30.0" promptText="Code" />
                   <TextField fx:id="Stock" layoutX="35.0" layoutY="197.0" prefHeight="30.0" promptText="Qte" />

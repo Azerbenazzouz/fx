@@ -5,11 +5,17 @@ import com.example.demo.entite.Medicament;
 import com.example.demo.utils.DbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -47,7 +53,8 @@ public class MedicamentController {
     @FXML
     TableColumn<Medicament, String> colType;
 
-    ObservableList<Medicament> observableList;
+    @FXML
+    ObservableList<Medicament> observableList = FXCollections.observableArrayList();
 
     Medicament medicament = new Medicament();
 
@@ -102,42 +109,39 @@ public class MedicamentController {
 
     private void lister() {
         tv.getItems().clear();
-        observableList = FXCollections.observableArrayList();
-        observableList.add(
-                new Medicament(
-                        1,
-                        "eee",
-                        44.5F,
-                        5,
-                        "ezouz"
-                )
+
+        Medicament m=new Medicament(
+                1,
+                "azer",
+                44.44F,
+                5,
+                "Zouu"
         );
-        try {
-            ResultSet rs = cn.createStatement().executeQuery("select * from medicament");
-            while (rs.next()) {
-                observableList.add(
-                        new Medicament(
-                                rs.getInt(1),
-                                rs.getString(2),
-                                rs.getFloat(3),
-                                rs.getInt(4),
-                                rs.getString(5)
-                        )
-                );
-                System.out.println(rs.getInt(1));
-
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        tv.setItems(observableList);
+        observableList.add(m);
+//        try {
+//            ResultSet rs = cn.createStatement().executeQuery("select * from medicament");
+//            while (rs.next()) {
+//                observableList.add(
+//                        new Medicament(
+//                                rs.getInt(1),
+//                                rs.getString(2),
+//                                rs.getFloat(3),
+//                                rs.getInt(4),
+//                                rs.getString(5)
+//                        )
+//                );
+//            }
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
 
         colId.setCellValueFactory(new PropertyValueFactory<Medicament,Integer>("codeMed"));
         colNom.setCellValueFactory(new PropertyValueFactory<Medicament,String>("nomMed"));
         colPrix.setCellValueFactory(new PropertyValueFactory<Medicament,Float>("prixMed"));
         colStock.setCellValueFactory(new PropertyValueFactory<Medicament,Integer>("qte"));
         colType.setCellValueFactory(new PropertyValueFactory<Medicament,String>("typeMed"));
+
+        tv.setItems(observableList);
     }
 
     @FXML
@@ -152,6 +156,18 @@ public class MedicamentController {
         Prix.setText(prix+"");
         Stock.setText(stock+"");
         Type.setText(type);
+    }
+
+    @FXML
+    private void GestionPatient(ActionEvent event) throws Exception {
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        Stage st2= new Stage();
+        Parent root= FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+
+        Scene se=new Scene(root);
+        st2.setScene(se);
+        st2.setTitle("Gestion Patient");
+        st2.show();
     }
 
     private void remiseAzéro() {
