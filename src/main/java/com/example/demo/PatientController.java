@@ -41,6 +41,9 @@ public class PatientController implements Initializable {
     TextField Telephone;
 
     @FXML
+    TextField Recherche;
+
+    @FXML
     TableColumn<Patient, Integer> colCode;
     @FXML
     TableColumn<Patient, String> colNom;
@@ -126,6 +129,24 @@ public class PatientController implements Initializable {
         colTelephone.setCellValueFactory(new PropertyValueFactory<>("tel"));
 
         tv.setItems(observableList);
+    }
+
+    @FXML
+    public void Rechercher(){
+        tv.getItems().clear();
+
+        observableList.addAll(daoPatient.findByName(Recherche.getText()));
+
+        colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colTelephone.setCellValueFactory(new PropertyValueFactory<>("tel"));
+
+        tv.setItems(observableList);
+
+        if(Recherche.getText().equals("")){
+            lister();
+        }
     }
 
     @FXML

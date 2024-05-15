@@ -16,10 +16,11 @@ public class DaoPatient implements IDao<Patient>{
     @Override
     public boolean add(Patient t) {
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO patient(nom, email, tel) VALUES(?, ?, ?)");
-            preparedStatement.setString(1, t.getNom());
-            preparedStatement.setString(2, t.getEmail());
-            preparedStatement.setString(3, t.getTel());
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO patient(code,nom, email, tel) VALUES(?,?, ?, ?)");
+            preparedStatement.setInt(1, t.getCode());
+            preparedStatement.setString(2, t.getNom());
+            preparedStatement.setString(3, t.getEmail());
+            preparedStatement.setString(4, t.getTel());
             preparedStatement.executeUpdate();
             return true;
         }catch(SQLException e){
@@ -78,6 +79,28 @@ public class DaoPatient implements IDao<Patient>{
         List<Patient> patients = new ArrayList<>();
         try{
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM patient");
+            preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            while(resultSet.next()){
+                patients.add(new Patient(resultSet.getInt("code"), resultSet.getString("nom"), resultSet.getString("email"), resultSet.getString("tel")));
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return patients;
+    }
+
+    @Override
+    public List<Patient> findByName(String nom) {
+        List<Patient> patients = new ArrayList<>();
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM patient WHERE nom LIKE ? OR code LIKE ?");
+            preparedStatement.setString(1,nom);
+            try {
+                preparedStatement.setInt(2,Integer.parseInt(nom));
+            }catch (Exception e){
+                preparedStatement.setString(2,"");
+            }
             preparedStatement.executeQuery();
             ResultSet resultSet = preparedStatement.getResultSet();
             while(resultSet.next()){

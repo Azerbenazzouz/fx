@@ -39,10 +39,12 @@
                         <TableColumn fx:id="colTelephone" prefWidth="187.5" text="Telephone" />
                      </columns>
                   </TableView>
-                  <TextField fx:id="Code" layoutX="35.0" layoutY="169.0" prefHeight="30.0" promptText="Code" />
-                  <TextField fx:id="Nom" layoutX="209.0" layoutY="169.0" prefHeight="30.0" promptText="Nom" />
-                  <TextField fx:id="Email" layoutX="376.0" layoutY="169.0" prefHeight="30.0" promptText="Email" />
-                  <TextField fx:id="Telephone" layoutX="550.0" layoutY="169.0" prefHeight="30.0" promptText="Telephone" />
+                  <TextField fx:id="Code" layoutX="35.0" layoutY="139.0" prefHeight="30.0" promptText="Code" />
+                  <TextField fx:id="Nom" layoutX="209.0" layoutY="139.0" prefHeight="30.0" promptText="Nom" />
+                  <TextField fx:id="Email" layoutX="376.0" layoutY="139.0" prefHeight="30.0" promptText="Email" />
+                  <TextField fx:id="Telephone" layoutX="550.0" layoutY="139.0" prefHeight="30.0" promptText="Telephone" />
+                  <TextField fx:id="Recherche" layoutX="35.0" layoutY="202.0" prefHeight="30.0" prefWidth="150.0" promptText="Rechercher ( Code / nom )" />
+                  <Button layoutX="208.0" layoutY="202.0" mnemonicParsing="false" onAction="#Rechercher" prefHeight="30.0" prefWidth="150.0" text="Rechercher" />
                </children>
             </AnchorPane>
          </children>

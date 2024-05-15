@@ -9,19 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane
-        maxHeight="-Infinity"
-        maxWidth="-Infinity"
-        minHeight="-Infinity"
-        minWidth="-Infinity"
-        prefHeight="600.0"
-        prefWidth="1000.0"
-        xmlns="http://javafx.com/javafx/21"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="com.example.demo.MedicamentController"
-
-
->
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.MedicamentController">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="1000.0">
          <children>
@@ -53,10 +41,12 @@
                      </columns>
                   </TableView>
                   <TextField fx:id="Id" layoutX="35.0" layoutY="149.0" prefHeight="30.0" promptText="Code" />
-                  <TextField fx:id="Stock" layoutX="35.0" layoutY="197.0" prefHeight="30.0" promptText="Qte" />
+                  <TextField fx:id="Stock" layoutX="550.0" layoutY="149.0" prefHeight="30.0" promptText="Qte" />
                   <TextField fx:id="Nom" layoutX="209.0" layoutY="149.0" prefHeight="30.0" promptText="Nom" />
-                  <TextField fx:id="Type" layoutX="209.0" layoutY="197.0" prefHeight="30.0" promptText="Type" />
+                  <TextField fx:id="Type" layoutX="35.0" layoutY="198.0" prefHeight="30.0" promptText="Type" />
                   <TextField fx:id="Prix" layoutX="376.0" layoutY="149.0" prefHeight="30.0" promptText="Prix" />
+                  <TextField fx:id="Rechercche" layoutX="376.0" layoutY="198.0" prefHeight="30.0" promptText="Rechercher ( nom / code )" />
+                  <Button layoutX="549.0" layoutY="198.0" mnemonicParsing="false" onAction="#Rechercher" prefHeight="30.0" prefWidth="150.0" text="Rechercher" />
                </children>
             </AnchorPane>
          </children>

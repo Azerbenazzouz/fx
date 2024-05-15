@@ -44,6 +44,9 @@ public class MedicamentController implements Initializable {
     @FXML
     TextField Type;
 
+    @FXML
+    TextField Rechercche;
+
 
     @FXML
     TableColumn<Medicament, Integer> colId;
@@ -105,6 +108,7 @@ public class MedicamentController implements Initializable {
         lister();
         remiseAzero();
     }
+
     @FXML
     private void Clear(){
         lister();
@@ -139,6 +143,25 @@ public class MedicamentController implements Initializable {
         colType.setCellValueFactory(new PropertyValueFactory<>("typeMed"));
 
         tv.setItems(observableList);
+    }
+
+    @FXML
+    public void Rechercher(){
+        tv.getItems().clear();
+
+        observableList.addAll(daoMedicament.findByName(Rechercche.getText()));
+
+        colId.setCellValueFactory(new PropertyValueFactory<>("codeMed"));
+        colNom.setCellValueFactory(new PropertyValueFactory<>("nomMed"));
+        colPrix.setCellValueFactory(new PropertyValueFactory<>("prixMed"));
+        colStock.setCellValueFactory(new PropertyValueFactory<>("qte"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("typeMed"));
+
+        tv.setItems(observableList);
+
+        if(Rechercche.getText().equals("")){
+            lister();
+        }
     }
 
     @FXML

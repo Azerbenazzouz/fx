@@ -10,17 +10,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Integer.parseInt;
+
 public class DaoMedicament implements IDao<Medicament> {
     private Connection connection = DbConnection.seConnecter();
 
     @Override
     public boolean add(Medicament medicament) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO medicament(nomMed, prixMed, qte, typeMed) VALUES(?, ?, ?, ?)");
-            preparedStatement.setString(1, medicament.getNomMed());
-            preparedStatement.setFloat(2, medicament.getPrixMed());
-            preparedStatement.setInt(3, medicament.getQte());
-            preparedStatement.setString(4, medicament.getTypeMed());
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO medicament(codeMed,nomMed, prixMed, qte, typeMed) VALUES(?,?, ?, ?, ?)");
+            preparedStatement.setInt(1, medicament.getCodeMed());
+            preparedStatement.setString(2, medicament.getNomMed());
+            preparedStatement.setFloat(3, medicament.getPrixMed());
+            preparedStatement.setInt(4, medicament.getQte());
+            preparedStatement.setString(5, medicament.getTypeMed());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -88,4 +91,27 @@ public class DaoMedicament implements IDao<Medicament> {
         }
         return medicaments;
     }
+
+    @Override
+    public List<Medicament> findByName(String nom) {
+        List<Medicament> medicaments = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM medicament WHERE nomMed LIKE ? OR codeMed LIKE ?");
+            preparedStatement.setString(1,nom);
+            try {
+                preparedStatement.setInt(2,Integer.parseInt(nom));
+            }catch (Exception e){
+                preparedStatement.setString(2,"");
+            }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                medicaments.add(new Medicament(resultSet.getInt("codeMed"), resultSet.getString("nomMed"), resultSet.getFloat("prixMed"), resultSet.getInt("qte"), resultSet.getString("typeMed")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return medicaments;
+    }
+
+
 }

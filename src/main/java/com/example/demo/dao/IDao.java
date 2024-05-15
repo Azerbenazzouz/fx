@@ -8,4 +8,5 @@ public interface IDao<T> {
     boolean delete(int id);
     T findById(int id);
     List<T> findAll();
+    List<T> findByName(String nom);
 }

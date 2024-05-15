@@ -121,4 +121,9 @@ public class DaoUtilisateur implements IDao<Utilisateur> {
         }
         return utilisateurs;
     }
+
+    @Override
+    public List<Utilisateur> findByName(String nom) {
+        return List.of();
+    }
 }
