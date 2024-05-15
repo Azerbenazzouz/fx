@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,7 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class PatientController {
+public class PatientController implements Initializable {
     private Connection cn = DbConnection.seConnecter();
     private DaoPatient daoPatient = new DaoPatient();
 
@@ -114,7 +115,6 @@ public class PatientController {
                         rs.getString(4)
                 );
                 observableList.add( p );
-                System.out.println(p);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

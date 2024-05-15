@@ -9,7 +9,19 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.MedicamentController">
+<StackPane
+        maxHeight="-Infinity"
+        maxWidth="-Infinity"
+        minHeight="-Infinity"
+        minWidth="-Infinity"
+        prefHeight="600.0"
+        prefWidth="1000.0"
+        xmlns="http://javafx.com/javafx/21"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.example.demo.MedicamentController"
+
+
+>
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="1000.0">
          <children>
@@ -25,7 +37,7 @@
                   <Button layoutX="34.0" layoutY="91.0" mnemonicParsing="false" onAction="#Ajouter" prefHeight="30.0" prefWidth="150.0" text="Ajouter" />
                   <Button layoutX="208.0" layoutY="91.0" mnemonicParsing="false" onAction="#Modifier" prefHeight="30.0" prefWidth="150.0" text="Modifier" />
                   <Button layoutX="375.0" layoutY="91.0" mnemonicParsing="false" onAction="#Archiver" prefHeight="30.0" prefWidth="150.0" text="Archiver" />
-                  <Button layoutX="549.0" layoutY="91.0" mnemonicParsing="false" onAction="#Clear" prefHeight="30.0" prefWidth="150.0" text="Lister" />
+                  <Button layoutX="549.0" layoutY="91.0" mnemonicParsing="false" onAction="#Clear" prefHeight="30.0" prefWidth="150.0" text="Clear" />
                   <Label layoutX="278.0" layoutY="38.0" text="Gestion Medicament">
                      <font>
                         <Font name="System Bold" size="20.0" />

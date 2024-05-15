@@ -37,11 +37,7 @@ public class DaoPatient implements IDao<Patient>{
             preparedStatement.setString(3, patient.getTel());
             preparedStatement.setInt(4, patient.getCode());
             preparedStatement.executeUpdate();
-            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-            if(resultSet.next()){
-                patient.setCode(resultSet.getInt(1));
-                return true;
-            }
+            return true;
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -88,7 +84,7 @@ public class DaoPatient implements IDao<Patient>{
                 patients.add(new Patient(resultSet.getInt("code"), resultSet.getString("nom"), resultSet.getString("email"), resultSet.getString("tel")));
             }
         }catch(SQLException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return patients;
     }

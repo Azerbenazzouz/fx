@@ -30,15 +30,17 @@
             </AnchorPane>
             <AnchorPane layoutX="300.0" layoutY="2.0" prefHeight="600.0" prefWidth="700.0">
                <children>
-                  <Label layoutX="270.0" layoutY="144.0" text="Se Connecter" textAlignment="CENTER">
+                  <TextField fx:id="Nom" layoutX="240.0" layoutY="168.0" prefHeight="30.0" prefWidth="220.0" promptText="Nom" />
+                  <TextField fx:id="Telephone" layoutX="240.0" layoutY="206.0" prefHeight="30.0" prefWidth="220.0" promptText="Tel" />
+                  <TextField fx:id="Email" layoutX="241.0" layoutY="246.0" prefHeight="30.0" prefWidth="220.0" promptText="Email" />
+                  <PasswordField fx:id="Password" layoutX="240.0" layoutY="285.0" prefHeight="30.0" prefWidth="220.0" promptText="Mot de passe" />
+                  <Button layoutX="240.0" layoutY="335.0" mnemonicParsing="false" onAction="#Register" prefHeight="30.0" prefWidth="220.0" text="S'inscrire" />
+                  <Label layoutX="294.0" layoutY="94.0" text="S'inscrire" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="Email" layoutX="241.0" layoutY="236.0" prefHeight="30.0" prefWidth="220.0" promptText="Email" />
-                  <PasswordField fx:id="Password" layoutX="240.0" layoutY="285.0" prefHeight="30.0" prefWidth="220.0" promptText="Mot de passe" />
-                  <Button layoutX="240.0" layoutY="335.0" mnemonicParsing="false" onAction="#Login" prefHeight="30.0" prefWidth="220.0" text="Se connecter" />
-                  <Button layoutX="240.0" layoutY="387.0" mnemonicParsing="false" onAction="#toRegister" prefHeight="30.0" prefWidth="220.0" text="S'inscrire" />
+                  <Button layoutX="240.0" layoutY="387.0" mnemonicParsing="false" onAction="#toLogin" prefHeight="30.0" prefWidth="220.0" text="Se connecter" />
                </children>
             </AnchorPane>
          </children>

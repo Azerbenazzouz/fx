@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,14 +22,16 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class MedicamentController {
-    private Connection cn = DbConnection.seConnecter();
-    private DaoMedicament daoMedicament = new DaoMedicament();
+public class MedicamentController implements Initializable {
+    private final Connection cn = DbConnection.seConnecter();
+    private final DaoMedicament daoMedicament = new DaoMedicament();
+
 
     @FXML
-    TableView<Medicament> tv = new TableView<Medicament>();
+    TableView<Medicament> tv = new TableView<>();
 
     @FXML
     TextField Id;
@@ -58,6 +61,7 @@ public class MedicamentController {
 
     Medicament medicament = new Medicament();
 
+
     @FXML
     private void Ajouter() {
         medicament.setCodeMed(Integer.parseInt(Id.getText()));
@@ -72,7 +76,7 @@ public class MedicamentController {
             System.out.println("Echec d'ajout");
         }
         lister();
-        remiseAzéro();
+        remiseAzero();
     }
 
     @FXML
@@ -88,7 +92,7 @@ public class MedicamentController {
             System.out.println("Echec de modification");
         }
         lister();
-        remiseAzéro();
+        remiseAzero();
     }
 
     @FXML
@@ -99,19 +103,20 @@ public class MedicamentController {
             System.out.println("Echec d'archivage");
         }
         lister();
-        remiseAzéro();
+        remiseAzero();
     }
     @FXML
     private void Clear(){
         lister();
-        remiseAzéro();
+        remiseAzero();
     }
 
     private void lister() {
         tv.getItems().clear();
 
         try {
-            ResultSet rs = cn.createStatement().executeQuery("select * from medicament");
+            String req = "select * from medicament";
+            ResultSet rs = cn.createStatement().executeQuery(req);
             while (rs.next()) {
                 observableList.add(
                         new Medicament(
@@ -123,8 +128,8 @@ public class MedicamentController {
                         )
                 );
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("codeMed"));
@@ -154,22 +159,23 @@ public class MedicamentController {
     private void GestionPatient(ActionEvent event) throws Exception {
         ((Node) event.getSource()).getScene().getWindow().hide();
         Stage st2= new Stage();
-        Parent root= FXMLLoader.load(getClass().getResource("Patient.fxml"));
+        Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Patient.fxml")));
 
         Scene se=new Scene(root);
         st2.setScene(se);
         st2.setTitle("Gestion Patient");
+
         st2.show();
     }
 
-    private void remiseAzéro() {
+    private void remiseAzero() {
         Id.setText("");
         Nom.setText("");
         Prix.setText("");
         Stock.setText("");
         Type.setText("");
     }
-
+    @FXML
     public void initialize(URL url, ResourceBundle rb) {
         this.lister();
     }
