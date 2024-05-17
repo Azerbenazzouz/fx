@@ -199,7 +199,19 @@ public class PatientController implements Initializable {
 
         Scene se=new Scene(root);
         st2.setScene(se);
-        st2.setTitle("Gestion Patient");
+        st2.setTitle("Gestion Commande");
+        st2.show();
+    }
+
+    @FXML
+    private void GestionCommande(ActionEvent event) throws Exception {
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        Stage st2= new Stage();
+        Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ListeCommande.fxml")));
+
+        Scene se=new Scene(root);
+        st2.setScene(se);
+        st2.setTitle("Liste Commandes");
         st2.show();
     }
 
