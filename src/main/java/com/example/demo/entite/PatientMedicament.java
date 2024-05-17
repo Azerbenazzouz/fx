@@ -14,6 +14,7 @@ public class PatientMedicament {
         this.medicament = medicament;
         this.patient = patient;
         this.qte = qte;
+        this.date = new Date();
     }
 
     public int getQte() {

@@ -5,6 +5,7 @@ import com.example.demo.dao.DaoPatient;
 import com.example.demo.dao.DaoPatientMedicament;
 import com.example.demo.entite.Medicament;
 import com.example.demo.entite.Patient;
+import com.example.demo.entite.PatientMedicament;
 import com.example.demo.utils.DbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,10 +23,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -66,6 +70,8 @@ public class PatientMedicamentController implements Initializable {
     @FXML
     TableColumn<Patient,String> NomPatList;
     // List Commande
+    @FXML
+    TableColumn<Medicament,Integer> CodeMedListCmd;
     @FXML
     TableColumn<Medicament,String> NomMedListCmd;
     @FXML
@@ -135,7 +141,7 @@ public class PatientMedicamentController implements Initializable {
     }
 
     private void listerCommandes() {
-
+        CodeMedListCmd.setCellValueFactory(new PropertyValueFactory<>("codeMed"));
         NomMedListCmd.setCellValueFactory(new PropertyValueFactory<>("nomMed"));
         QteMedListCmd.setCellValueFactory(new PropertyValueFactory<>("Qte"));
         PrixMedListCmd.setCellValueFactory(new PropertyValueFactory<>("prixMed"));
@@ -148,7 +154,7 @@ public class PatientMedicamentController implements Initializable {
         for (Medicament medicament : obsMedCmdList){
             total += medicament.getPrixMed();
         }
-        Total.setText(String.valueOf(total));
+        Total.setText(String.valueOf(total)+" TND");
     }
 
     @FXML
@@ -240,11 +246,12 @@ public class PatientMedicamentController implements Initializable {
 
     @FXML
     private void selectMed(){
+        Integer code = this.medicamentTable.getSelectionModel().getSelectedItem().getCodeMed();
         String nom=this.medicamentTable.getSelectionModel().getSelectedItem().getNomMed();
         int qte=this.medicamentTable.getSelectionModel().getSelectedItem().getQte();
         float prix=this.medicamentTable.getSelectionModel().getSelectedItem().getPrixMed();
-        System.out.println(this.medicamentTable.getSelectionModel().getSelectedItem());
-        medicament = new Medicament(nom,qte,prix);
+
+        medicament = new Medicament(nom,qte,prix,code);
     }
 
     @FXML
@@ -253,16 +260,55 @@ public class PatientMedicamentController implements Initializable {
             int qte = Integer.parseInt(QteMed.getText());
             if(medicament != null){
                 if(qte<=medicament.getQte()){
+                    
+                    ArrayList<Medicament> list = new ArrayList<>();
+                   
+                    for(int i=0;i<obsMedCmdList.size();i++){
+                        Medicament med = obsMedCmdList.get(i);
+                        if(med.getCodeMed() != medicament.getCodeMed()){
+                            list.add(med);
+                        }
+                    }
                     medicament.setQte(qte);
-                    medicament.setPrixMed(qte*medicament.getPrixMed());
-                    total += medicament.getPrixMed();
-                    obsMedCmdList.add(medicament);
+                    medicament.setPrixMed(qte * medicament.getPrixMed());
+                    list.add(medicament);
+
+                    obsMedCmdList.clear();
+                    obsMedCmdList.addAll(list);
                     listerCommandes();
-                    System.out.println(medicament);
+
+                    medicamentTable.getSelectionModel().clearSelection();
+                    QteMed.setText("");
+                    
                 }
             }
         }catch (NumberFormatException e){
             System.out.println(e.getMessage());
         }
+    }
+
+    @FXML
+    public void Commander(){
+        if (patientTable.getSelectionModel().getSelectedItem() != null){
+            int codePat = patientTable.getSelectionModel().getSelectedItem().getCode();
+            for(Medicament medicament : obsMedCmdList){
+                PatientMedicament patMed = new PatientMedicament(medicament,daoPatient.findById(codePat),medicament.getQte());
+                daoPatientMedicament.add(patMed);
+            }
+
+            obsMedCmdList.clear();
+            listerCommandes();
+            patientTable.getSelectionModel().clearSelection();
+            refresh();
+        }
+    }
+
+    private void refresh(){
+        obsMedList.clear();
+        obsPatList.clear();
+        obsMedCmdList.clear();
+        listerMedicament();
+        listerPatient();
+        listerCommandes();
     }
 }

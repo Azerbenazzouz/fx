@@ -95,7 +95,7 @@ public class DaoPatient implements IDao<Patient>{
         List<Patient> patients = new ArrayList<>();
         try{
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM patient WHERE nom LIKE ? OR code LIKE ?");
-            preparedStatement.setString(1,nom);
+            preparedStatement.setString(1,"%" + nom + "%");
             try {
                 preparedStatement.setInt(2,Integer.parseInt(nom));
             }catch (Exception e){

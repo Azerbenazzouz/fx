@@ -1,6 +1,6 @@
 package com.example.demo.entite;
 
-public class Medicament {
+public class Medicament implements Comparable<Medicament> {
     private int codeMed;
     private String nomMed;
     private float prixMed;
@@ -86,4 +86,30 @@ public class Medicament {
                 ", typeMed=" + typeMed +
                 '}';
     }
+
+    @Override
+    public int compareTo(Medicament o) {
+        if (this.codeMed == o.codeMed) {
+            return 0;
+        } else if (this.codeMed > o.codeMed) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+   @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Medicament)) return false;
+        Medicament medicament = (Medicament) o;
+        return getCodeMed() == medicament.getCodeMed();
+    }
+
+    // hashCode method
+    @Override
+    public int hashCode() {
+        return getCodeMed();
+    }
+
 }

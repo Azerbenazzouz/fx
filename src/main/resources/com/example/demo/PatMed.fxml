@@ -29,9 +29,10 @@
                   </Label>
                   <TableView fx:id="medicamentTable" layoutX="26.0" layoutY="194.0" onMouseClicked="#selectMed" prefHeight="350.0" prefWidth="225.0">
                     <columns>
+                        <TableColumn fx:id="CodeMedListCmd" prefWidth="50.0" text="Code" />
                       <TableColumn fx:id="NomMedList" prefWidth="75.0" text="Nom" />
-                      <TableColumn fx:id="QteMedList" prefWidth="75.0" text="Quantity" />
-                        <TableColumn fx:id="PrixMedList" prefWidth="75.0" text="Prix" />
+                      <TableColumn fx:id="QteMedList" prefWidth="50.0" text="Quantity" />
+                        <TableColumn fx:id="PrixMedList" prefWidth="50.0" text="Prix" />
                     </columns>
                   </TableView>
                   <TextField fx:id="QteMed" layoutX="26.0" layoutY="151.0" prefHeight="30.0" prefWidth="110.0" promptText="Qte Medicament" />
@@ -40,8 +41,8 @@
                   <Button layoutX="146.0" layoutY="109.0" mnemonicParsing="false" onAction="#RechercherMed" prefHeight="30.0" prefWidth="80.0" text="Rechercher" />
                   <TableView fx:id="patientTable" layoutX="266.0" layoutY="194.0" prefHeight="350.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn fx:id="CodePatList" prefWidth="75.0" text="Code" />
-                        <TableColumn fx:id="NomPatList" prefWidth="125.0" text="Nom Patient" />
+                        <TableColumn fx:id="CodePatList" prefWidth="50.0" text="Code" />
+                        <TableColumn fx:id="NomPatList" prefWidth="150.0" text="Nom Patient" />
                      </columns>
                   </TableView>
                   <TextField fx:id="CodePatRecherche" layoutX="266.0" layoutY="151.0" prefHeight="30.0" prefWidth="110.0" promptText="Code Patient" />
@@ -60,7 +61,7 @@
                   </Label>
                   <TextField fx:id="QteMedModifier" layoutX="491.0" layoutY="151.0" prefHeight="30.0" prefWidth="110.0" promptText="Qte Medicament" />
                   <Button layoutX="611.0" layoutY="151.0" mnemonicParsing="false" onAction="#modifierCmd" prefHeight="30.0" prefWidth="80.0" text="Modifier" />
-                  <Button layoutX="491.0" layoutY="109.0" mnemonicParsing="false" onAction="#supprimerCmd" prefHeight="30.0" prefWidth="200.0" text="Supprimer Medicament" />
+                  <Button layoutX="491.0" layoutY="109.0" mnemonicParsing="false" onAction="#supprimerCmd" prefHeight="30.0" prefWidth="90.0" text="Supprimer" />
                   <Label layoutX="490.0" layoutY="514.0" text="Prix Total :">
                      <font>
                         <Font size="20.0" />
@@ -71,6 +72,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
+                  <Button layoutX="601.0" layoutY="109.0" mnemonicParsing="false" onAction="#Commander" prefHeight="30.0" prefWidth="90.0" text="Commander" />
                </children>
             </AnchorPane>
          </children>

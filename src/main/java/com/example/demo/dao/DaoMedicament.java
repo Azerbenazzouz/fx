@@ -97,7 +97,7 @@ public class DaoMedicament implements IDao<Medicament> {
         List<Medicament> medicaments = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM medicament WHERE nomMed LIKE ? OR codeMed LIKE ?");
-            preparedStatement.setString(1,nom);
+            preparedStatement.setString(1,"%" + nom + "%");
             try {
                 preparedStatement.setInt(2,Integer.parseInt(nom));
             }catch (Exception e){
@@ -113,5 +113,33 @@ public class DaoMedicament implements IDao<Medicament> {
         return medicaments;
     }
 
+    public boolean updateQte(int codeMed, int qte) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE medicament SET qte = ? WHERE codeMed = ?");
+            preparedStatement.setInt(1, qte);
+            preparedStatement.setInt(2, codeMed);
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
+    public boolean minusQte(int codeMed, int qte) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT qte FROM medicament WHERE codeMed = ?");
+            preparedStatement.setInt(1, codeMed);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                int qteActuel = resultSet.getInt("qte");
+                if(qteActuel >= qte){
+                    return updateQte(codeMed, qteActuel - qte);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

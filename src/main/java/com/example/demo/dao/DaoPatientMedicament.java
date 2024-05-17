@@ -17,7 +17,7 @@ import java.util.List;
         patient_id INT,  
         medicament_id INT,
         qte INT,
-        date DATE,
+        date DATETIME ,
         FOREIGN KEY (patient_id) REFERENCES patient(code),
         FOREIGN KEY (medicament_id) REFERENCES medicament(codeMed),
         PRIMARY KEY (patient_id, medicament_id, date)
@@ -31,6 +31,7 @@ public class DaoPatientMedicament implements IDao<PatientMedicament> {
     public boolean add(PatientMedicament patientMedicament) {
         DaoMedicament daoMedicament = new DaoMedicament();
         DaoPatient daoPatient = new DaoPatient();
+        System.out.println(patientMedicament);
         try {
             String sql = "INSERT INTO patient_medicament (patient_id, medicament_id, qte, date) VALUES (?, ?, ?, ?)";
             PreparedStatement st = cn.prepareStatement(sql);
@@ -38,8 +39,10 @@ public class DaoPatientMedicament implements IDao<PatientMedicament> {
                 st.setInt(1, patientMedicament.getPatient().getCode());
                 st.setInt(2, patientMedicament.getMedicament().getCodeMed());
                 st.setInt(3, patientMedicament.getQte());
-                st.setDate(4, new Date(patientMedicament.getDate().getTime()));
-                return st.executeUpdate() == 1;
+                Date date = new Date(patientMedicament.getDate().getTime());
+                String dateStr = date.toString() + " " + patientMedicament.getDate().getHours() + ":" + patientMedicament.getDate().getMinutes() + ":" + patientMedicament.getDate().getSeconds();
+                st.setString(4, dateStr);
+                return st.executeUpdate() == 1 && daoMedicament.minusQte(patientMedicament.getMedicament().getCodeMed(), patientMedicament.getQte());
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
