@@ -93,7 +93,8 @@ public class PatientMedicamentController implements Initializable {
                         new Medicament(
                                 rs.getString(2),
                                 rs.getInt(4),
-                                rs.getFloat(3)
+                                rs.getFloat(3),
+                                rs.getInt(1)
                         )
                 );
             }
@@ -242,7 +243,7 @@ public class PatientMedicamentController implements Initializable {
         String nom=this.medicamentTable.getSelectionModel().getSelectedItem().getNomMed();
         int qte=this.medicamentTable.getSelectionModel().getSelectedItem().getQte();
         float prix=this.medicamentTable.getSelectionModel().getSelectedItem().getPrixMed();
-
+        System.out.println(this.medicamentTable.getSelectionModel().getSelectedItem());
         medicament = new Medicament(nom,qte,prix);
     }
 

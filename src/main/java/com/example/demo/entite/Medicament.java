@@ -15,6 +15,12 @@ public class Medicament {
         this.prixMed = prixMed;
     }
 
+    public Medicament(String nomMed , Integer qte , Float prixMed,int codeMed) {
+        this(nomMed,qte);
+        this.prixMed = prixMed;
+        this.codeMed = codeMed;
+    }
+
     public Medicament(String nomMed , Integer qte) {
         this.nomMed = nomMed;
         this.prixMed = prixMed;
