@@ -9,6 +9,17 @@ public class Medicament {
 
     public Medicament() {
     }
+
+    public Medicament(String nomMed , Integer qte , Float prixMed) {
+        this(nomMed,qte);
+        this.prixMed = prixMed;
+    }
+
+    public Medicament(String nomMed , Integer qte) {
+        this.nomMed = nomMed;
+        this.prixMed = prixMed;
+        this.qte = qte;
+    }
     public Medicament(int codeMed, String nomMed, Float prixMed, Integer qte, String typeMed) {
         this.codeMed = codeMed;
         this.nomMed = nomMed;

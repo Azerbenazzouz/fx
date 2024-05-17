@@ -8,6 +8,10 @@ public class Patient {
     private String tel;
 
     public Patient(){}
+    public Patient(Integer code,String nom ){
+        this.code = code;
+        this.nom = nom;
+    }
     public Patient(int code, String nom, String email, String tel) throws IllegalArgumentException {
         if(nom == null){
             throw new IllegalArgumentException("Le nom ne peut pas être null");
