@@ -1,5 +1,7 @@
 package com.example.demo.dao;
 
+import com.example.demo.entite.Commande;
+import com.example.demo.entite.Medicament;
 import com.example.demo.entite.PatientMedicament;
 import com.example.demo.utils.DbConnection;
 
@@ -174,4 +176,56 @@ public class DaoPatientMedicament implements IDao<PatientMedicament> {
         }
         return list;
     }
+
+    public List<Commande> findAllCommande(){
+        /*
+            SELECT * 
+            FROM `patient_medicament` 
+            GROUP BY `patient_id` , `date`
+            ORDER BY `date` DESC;
+        */
+        /*
+            SELECT *
+            FROM `patient_medicament`
+            WHERE `patient_id` = 1
+            AND `date` LIKE '2024-05-17 19:44:50';
+        */
+        DaoPatient daoPatient = new DaoPatient();
+        DaoMedicament daoMedicament = new DaoMedicament();
+        String req1 = "SELECT * FROM `patient_medicament` GROUP BY `patient_id` , `date` ORDER BY `date` DESC";
+        String req2 = "SELECT * FROM `patient_medicament` WHERE `patient_id` = ? AND `date` LIKE ?";
+        Commande commande;
+        try {
+            PreparedStatement st = cn.prepareStatement(req1);
+            ResultSet rs = st.executeQuery();
+            List<Commande> listCommandes = new ArrayList<>();
+            while(rs.next()){
+                commande = new Commande();
+                commande.setPatient(daoPatient.findById(rs.getInt("patient_id")));
+                commande.setDate(rs.getDate("date"));
+                List<Medicament> list = new ArrayList<>();
+                PreparedStatement st2 = cn.prepareStatement(req2);
+                st2.setInt(1, rs.getInt("patient_id"));
+                st2.setString(2, rs.getString("date"));
+                ResultSet rs2 = st2.executeQuery();
+                float prixTotal = 0;
+                while(rs2.next()){
+                    Medicament medicament;
+                    medicament = daoMedicament.findById(rs2.getInt("medicament_id"));
+                    medicament.setQte(rs2.getInt("qte"));
+                    medicament.setPrixMed(medicament.getPrixMed() * medicament.getQte());
+                    list.add(medicament);
+                    prixTotal += medicament.getPrixMed();
+                }
+                commande.setMedicaments(list);
+                commande.setPrixTotal(prixTotal);
+                listCommandes.add(commande);
+            }
+            return listCommandes;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    
 }

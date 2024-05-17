@@ -23,13 +23,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -212,6 +210,18 @@ public class PatientMedicamentController implements Initializable {
         st2.setScene(se);
         st2.setTitle("Gestion Patient");
 
+        st2.show();
+    }
+
+    @FXML
+    private void GestionCommande(ActionEvent event) throws Exception {
+        ((Node) event.getSource()).getScene().getWindow().hide();
+        Stage st2= new Stage();
+        Parent root= FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ListeCommande.fxml")));
+
+        Scene se=new Scene(root);
+        st2.setScene(se);
+        st2.setTitle("Liste Commandes");
         st2.show();
     }
 
