@@ -28,16 +28,16 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="commandeTable" layoutX="26.0" layoutY="164.0" prefHeight="400.0" prefWidth="450.0">
+                  <TableView fx:id="commandeTable" layoutX="26.0" layoutY="164.0" onMouseClicked="#SelectCommande" prefHeight="400.0" prefWidth="450.0">
                      <columns>
                         <TableColumn fx:id="NomPatCmd" prefWidth="150.0" text="Nom Patient" />
                         <TableColumn fx:id="DateCmd" prefWidth="150.0" text="Date" />
                         <TableColumn fx:id="PrixCmd" prefWidth="150.0" text="Prix Total" />
                      </columns>
                   </TableView>
-                  <TextField fx:id="CodePatRecherche" layoutX="26.0" layoutY="109.0" prefHeight="30.0" prefWidth="170.0" promptText="Code Patient" />
+                  <TextField fx:id="CodePatRecherche" layoutX="26.0" layoutY="109.0" prefHeight="30.0" prefWidth="170.0" promptText="Patient (Code / Nom)" />
                   <Button layoutX="211.0" layoutY="109.0" mnemonicParsing="false" onAction="#RechercherPat" prefHeight="30.0" prefWidth="80.0" text="Rechercher" />
-                  <TableView fx:id="medicamentTable" layoutX="491.0" layoutY="164.0" prefHeight="400.0" prefWidth="225.0">
+                  <TableView fx:id="medicamentTable" layoutX="491.0" layoutY="164.0" prefHeight="350.0" prefWidth="225.0">
                      <columns>
                         <TableColumn fx:id="NomMed" prefWidth="75.0" text="Nom" />
                         <TableColumn fx:id="QteMed" prefWidth="75.0" text="Quantity" />
@@ -45,6 +45,16 @@
                      </columns>
                   </TableView>
                   <Button layoutX="491.0" layoutY="109.0" mnemonicParsing="false" onAction="#Exporter" prefHeight="30.0" prefWidth="225.0" text="Exporter" />
+                  <Label layoutX="496.0" layoutY="527.0" text="Prix Total :">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="Total" layoutX="604.0" layoutY="527.0" text="0.00 TND">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>
