@@ -1,9 +1,13 @@
 package com.example.demo;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -24,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -36,6 +41,7 @@ public class CommandeController implements Initializable {
     private final DaoPatient daoPatient = new DaoPatient();
     private final DaoPatientMedicament daoPatientMedicament = new DaoPatientMedicament();
 
+    private File csvFile;
 
     @FXML
     private TableView<Commande> commandeTable;
@@ -44,6 +50,9 @@ public class CommandeController implements Initializable {
 
     @FXML
     private TextField CodePatRecherche;
+
+    @FXML
+    private Label Total;
 
     @FXML
     private TableColumn<Patient, String> NomPatCmd;
@@ -102,13 +111,33 @@ public class CommandeController implements Initializable {
     }
 
     @FXML
-    void RechercherPat(ActionEvent event) {
+    void RechercherPat() {
+        commandeTable.getItems().clear();
+        medicamentTable.getItems().clear();
 
+        observableCommandeList.addAll(daoPatientMedicament.findAllCommandeByName(CodePatRecherche.getText()));
+        commandeTable.setItems(observableCommandeList);
+
+        if(CodePatRecherche.getText().isEmpty()){
+            lister();
+        }
     }
 
     @FXML
-    void Exporter(ActionEvent event) {
+    void Exporter(ActionEvent event){
+        Commande c = commandeTable.getSelectionModel().getSelectedItem();
+        if(c == null) return;
 
+        csvFile = new File("Export Medicament "+c.getNomPatient()+" "+c.getDate().toString());
+        try {
+            PrintWriter out = new PrintWriter(csvFile);
+            for(Medicament med : c.getMedicaments()){
+                out.println(med.getCodeMed()+" , "+med.getNomMed()+" , "+med.getQte()+" , "+med.getPrixMed());
+            }
+            out.close();
+        }catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private void lister(){
@@ -123,6 +152,31 @@ public class CommandeController implements Initializable {
         PrixCmd.setCellValueFactory(new PropertyValueFactory<>("prixTotal"));
 
         commandeTable.setItems(observableCommandeList);
+    }
+
+    @FXML
+    public void SelectCommande(){
+        Commande c = this.commandeTable.getSelectionModel().getSelectedItem();
+
+        this.medicamentTable.getItems().clear();
+
+        observableMedList.addAll(c.getMedicaments());
+
+        NomMed.setCellValueFactory(new PropertyValueFactory<>("nomMed"));
+        QteMed.setCellValueFactory(new PropertyValueFactory<>("Qte"));
+        PrixMed.setCellValueFactory(new PropertyValueFactory<>("PrixMed"));
+
+            prixTotal();
+        this.medicamentTable.setItems(observableMedList);
+
+    }
+
+    public void prixTotal(){
+        float total = 0;
+        for (Medicament medicament : observableMedList){
+            total += medicament.getPrixMed();
+        }
+        Total.setText(String.valueOf(total)+" TND");
     }
 
     @Override
