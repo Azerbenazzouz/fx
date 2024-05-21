@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -105,17 +106,27 @@ public class PatientController implements Initializable {
 
     @FXML
     private void Archiver() {
-        if(daoPatient.delete(Integer.parseInt(Code.getText()))){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Archivage Patient");
+        alert.setContentText("Voulez-vous vraiment archiver ce patient ?");
+        alert.showAndWait();
+        ButtonType buttonType = alert.getResult();
+        if(buttonType != ButtonType.OK){
+            lister();
+            remiseAzero();
+            return;
+        }
+        if(daoPatient.delete(Integer.parseInt(Code.getText()))) {
             System.out.println("Archivage avec succès");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Archivage Patient");
-            alert.setContentText("Archivage avec succès");
-            alert.showAndWait();
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setTitle("Archivage Patient");
+            alert2.setContentText("Archivage avec succès");
+            alert2.showAndWait();
         }else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Archivage Patient");
-            alert.setContentText("Echec d'archivage");
-            alert.showAndWait();
+            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+            alert2.setTitle("Archivage Patient");
+            alert2.setContentText("Echec d'archivage");
+            alert2.showAndWait();
             System.out.println("Echec d'archivage");
         }
         lister();

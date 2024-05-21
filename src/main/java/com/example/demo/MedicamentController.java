@@ -13,10 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -114,7 +111,16 @@ public class MedicamentController implements Initializable {
 
     @FXML
     private void Archiver() {
-
+        Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+        alert2.setTitle("Archivage Medicament");
+        alert2.setContentText("Voulez-vous vraiment archiver ce medicament ?");
+        alert2.showAndWait();
+        ButtonType buttonType = alert2.getResult();
+        if(buttonType != ButtonType.OK){
+            lister();
+            remiseAzero();
+            return;
+        }
         if(daoMedicament.delete(Integer.parseInt(Id.getText()))){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Archivage Medicament");

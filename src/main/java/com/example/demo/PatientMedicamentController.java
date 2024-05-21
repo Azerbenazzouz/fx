@@ -166,10 +166,17 @@ public class PatientMedicamentController implements Initializable {
     private void modifierCmd(){
         try {
             int qte = Integer.parseInt(QteMedModifier.getText());
+            System.out.println(qte);
             Medicament medicament = medicamentCommandeTable.getSelectionModel().getSelectedItem();
-            if(qte<=medicament.getQte()){
-                medicament.setQte(qte);
-                medicament.setPrixMed(qte*medicament.getPrixMed());
+            System.out.println("Medicament"+medicament);
+            Medicament med = obsMedList.stream().filter(m -> m.getCodeMed() == medicament.getCodeMed()).findFirst().orElse(null);
+            System.out.println("Med"+med);
+            if(qte<=med.getQte()){
+                Medicament newV = new Medicament(medicament.getNomMed(),qte,med.getPrixMed()*qte,medicament.getCodeMed());
+                System.out.println("Mednew"+newV);
+                obsMedCmdList.remove(medicament);
+                obsMedCmdList.add(newV);
+
                 listerCommandes();
             }
         }catch (NumberFormatException e){

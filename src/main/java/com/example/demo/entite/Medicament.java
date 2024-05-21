@@ -23,7 +23,7 @@ public class Medicament implements Comparable<Medicament> {
 
     public Medicament(String nomMed , Integer qte) {
         this.nomMed = nomMed;
-        this.prixMed = prixMed;
+        // this.prixMed = prixMed;
         this.qte = qte;
     }
     public Medicament(int codeMed, String nomMed, Float prixMed, Integer qte, String typeMed) {
